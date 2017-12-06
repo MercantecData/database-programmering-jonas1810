@@ -1,12 +1,22 @@
 <?php
 include "Connection.php";
-    $input_username = $_POST["input_username"];
-    $input_password = $_POST["input_passowrd"];
-    $login = $_POST["login"];
-    $create = $_POST["create"];
+    @$input_username = $_POST["input_username"];
+    @$input_password = $_POST["input_password"];
+    @$login = $_POST["login"];
+    @$create = $_POST["create"];
 
-    if(isset($login)){
-        echo "login";   
+    if(isset($login))
+    {
+        $test = validateLogin($input_username, $input_password);
+        echo (string)$test;
+        if($test)
+        {
+            echo "logged in";
+        }
+        else 
+        {
+            echo "login failed";
+        }
     }
 
     else if(isset($create)){
