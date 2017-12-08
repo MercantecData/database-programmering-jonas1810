@@ -14,7 +14,6 @@
     }
     function databaseClose($conn){
      mysqli_close($conn);
-    
     }
     function runQuery($query)
     {
@@ -26,7 +25,6 @@
     function createUser($username, $password){
         $query = "INSERT INTO Users(username, password) VALUES('$username','$password')";
         runQuery($query);
-        
     }
     function userExists($username){
         $query = "Select username From Users";
@@ -42,34 +40,20 @@
         return $found;
     }
     function validateLogin($username, $password){
-        $query = "SELECT username, password FROM Users";
+        $query = "SELECT id, username, password FROM Users";
         $data = runQuery($query);
         
         while($row = $data->fetch_assoc())
         {
+            $db_id = $row["id"];
             $db_usernames = $row["username"];
             $db_password = $row["password"];
-            
-            //echo "---Input---<br>";
-            //echo $username . "<br>";
-            
-            //echo $password . "<br>";
-            
-            //echo "----DB----<BR>";
-            //echo $db_usernames . "<br>";
-            //echo $db_password . "<br>";
-            
-            
+        
             if ($username == $db_usernames && password_verify($password, $db_password))
             {
-               // echo "ok;";
-                return true;
-                
+                return $db_id;
             }
         }
-        
-        return false;
-        
+        return NULL;
     }
-
 ?>
